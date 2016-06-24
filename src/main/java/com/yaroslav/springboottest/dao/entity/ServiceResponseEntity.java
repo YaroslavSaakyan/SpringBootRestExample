@@ -1,0 +1,57 @@
+package com.yaroslav.springboottest.dao.entity;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * Created by yaroslav
+ * Date: 24.06.16
+ */
+@Entity
+@Table(name = "response")
+public class ServiceResponseEntity {
+    @Id
+    @NotEmpty
+    private String id;
+    @NotEmpty
+    private String userId;
+    @NotEmpty
+    private String title;
+    @NotEmpty
+    private String body;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+}

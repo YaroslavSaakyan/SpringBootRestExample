@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="Demo">
+<head>
+	<meta charset="UTF-8">
+	<title>Spring Boot Test</title>
+	<script src="/webjars/angularjs/1.5.7/angular.min.js"></script>
+	<script src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+<div ng-controller="Controller">
+	<form ng-submit="submitForm()">
+		<label>Post id</label>
+		<input name="postId" type="number" ng-model="form.postId">
+		<input type="submit" value="Submit">
+	</form>
+	<div ng-repeat="response in listOfResponses">
+		<h2>Id: {{ response.id }}</h2>
+		<div>UserId: {{ response.userId }}</div>
+		<div>Title: {{ response.title }}</div>
+		<div>Body: {{ response.body }}</div>
+	</div>
+</div>
+<script>
+	var app = angular.module("Demo", []);
+	app.controller("Controller", function($scope, $http) {
+		$scope.getResponses = function() {
+			$http.get('/posts').success(function(data, status, headers, config) {
+				$scope.listOfResponses = data;
+			})
+		}
+		$scope.getResponses();
+
+		$scope.form = {};
+        $scope.submitForm = function() {
+            var postId = $.param($scope.form);
+            var url = "/posts/".concat(postId.split('=')[1]);
+            $http({
+	            method : 'POST',
+	            url : url,
+	            data : postId,
+	            headers : {
+	                'Content-Type' : 'application/x-www-form-urlencoded'
+	            }
+            }).success(function() {
+              $scope.getResponses();
+            })
+        }
+	});
+	</script>
+</body>
+</html>
